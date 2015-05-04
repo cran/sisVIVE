@@ -29,7 +29,7 @@ sisVIVE <- function(Y,D,Z,intercept=TRUE,normalize=TRUE) {
   QR = qr(Z); Yhat = qr.fitted(QR,Y); Dhat = qr.fitted(QR,D);
   DhatZ = t(Dhat) %*% Z; Z.transformed = Z - Dhat %*% DhatZ / sum( Dhat^2)
   Y.transformed = Yhat - Dhat * sum(Dhat * Yhat) / sum( Dhat^2)
-  fit = lars(Z.transformed,Y.transformed,intercept = FALSE,normalize=FALSE)
+  fit = lars(Z.transformed,Y.transformed,intercept = FALSE,normalize=TRUE)
   estEffect = drop(t(Dhat) %*% (as.numeric(Y) - Z %*% t(coef(fit)) )) / sum(Dhat^2)
   
   # Packaging Object

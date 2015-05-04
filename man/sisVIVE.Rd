@@ -24,7 +24,7 @@
 	\item{Dhat}{A numeric vector of predicted exposure given instruments}
 }
 \references{For LARS: Efron, Hastie, Johnstone and Tibshirani (2003) "Least Angle Regression" (with discussion) Annals of Statistics}
-\author{Hyunseung kang}
+\author{Hyunseung Kang. We thank Frank Windmeijer for his suggestion to improve the code.}
 \seealso{plot, summary, and predict methods for sisVIVE, and cv.sisVIVE}
 \examples{
 library(MASS)
