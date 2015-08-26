@@ -12,7 +12,7 @@ Produces a summary of the sisVIVE object, including the estimates of the causal 
 \details{Each row summarizes an estimated causal effect of exposure on outcome and the estimated set of invalid instruments for one lambda}
 \value{Each row summarizes an estimated causal effect of exposure on outcome and the estimated set of invalid instruments for one lambda. For the estimated set of invalid instruments, each number is a column index number for Z that is estimated to be invalid.}
 \author{Hyunseung Kang}
-\seealso{predict, plot, and cv.sisVIVE}
+\seealso{predict and cv.sisVIVE}
 \examples{
 library(MASS)
 library(lars)

@@ -20,7 +20,7 @@
 
 %% ~Make other sections like Warning with \section{Warning }{....} ~
 
-\seealso{plot, summary, and cv.sisVIVE}
+\seealso{summary, and cv.sisVIVE}
 \examples{
 library(MASS)
 library(lars)

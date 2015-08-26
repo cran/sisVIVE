@@ -25,7 +25,7 @@
 }
 \references{For LARS: Efron, Hastie, Johnstone and Tibshirani (2003) "Least Angle Regression" (with discussion) Annals of Statistics}
 \author{Hyunseung Kang. We thank Frank Windmeijer for his suggestion to improve the code.}
-\seealso{plot, summary, and predict methods for sisVIVE, and cv.sisVIVE}
+\seealso{summary and predict methods for sisVIVE, and cv.sisVIVE which performs cross-validation to choose the tuning parameter}
 \examples{
 library(MASS)
 library(lars)
@@ -39,7 +39,6 @@ Y = intY + Z \%*\% ZtoY + D * DtoY + error[,2]
 
 result = sisVIVE(Y,D,Z)
 summary(result)
-plot(result)
 }
 \keyword{ sisVIVE }
 
