@@ -98,7 +98,7 @@ cv.sisVIVE <- function(Y,D,Z,lambdaSeq,K = 10,intercept=TRUE,normalize=TRUE) {
   fitall = sisVIVE(Y,D,Z,intercept=intercept,normalize=normalize)
   if(missing(lambdaSeq) || all(is.na(lambdaSeq))) {
     #warning("Lambda sequence not provided; defaulting to using lambdas provided by sisVIVE")
-    lambdaSeq = c(fitall$lambda,seq(from=min(fitall$lambda,na.rm=TRUE),to=2*max(fitall$lambda,na.rm=TRUE),length.out = 100))
+    lambdaSeq = c(fitall$lambda,seq(from=0,to=2*max(fitall$lambda,na.rm=TRUE),length.out = 100))
     lambdaSeq = sort(unique(lambdaSeq))
   }
   if(any(is.na(lambdaSeq))) {
@@ -111,12 +111,14 @@ cv.sisVIVE <- function(Y,D,Z,lambdaSeq,K = 10,intercept=TRUE,normalize=TRUE) {
   # Define constants
   n = nrow(Z); L = ncol(Z);
  
+ #lambdaSeq = lambdaSeq * sqrt(K - 1)/sqrt(K)
+ 
   # Cross validation
   sampleIndex = sample(rep(1:K,length.out= n))
   errormat = matrix(0,K,length(lambdaSeq))
   for(i in 1:K) {
     testSet = (sampleIndex == i)
-	trainfit = sisVIVE(Y[-testSet], D[-testSet], Z[-testSet, , drop=FALSE], intercept = intercept,normalize = normalize)
+	trainfit = sisVIVE(Y[!testSet], D[!testSet], Z[!testSet, , drop=FALSE], intercept = intercept,normalize = normalize)
 	trainfitCoef = predict(trainfit, lambda = lambdaSeq, type = "coefficients")
 	Y.test = Y[testSet]; D.test = D[testSet]; Z.test = Z[testSet,,drop=FALSE]
 	if(intercept) {
@@ -138,6 +140,6 @@ cv.sisVIVE <- function(Y,D,Z,lambdaSeq,K = 10,intercept=TRUE,normalize=TRUE) {
     mincv.index = which.min(cv); onestderrorbound = cv[mincv.index] + stderror[mincv.index]
     onestdLambda = max(lambdaSeq[which( (cv <= onestderrorbound) & (cv >= cv[mincv.index]))]) #this is never empty vector 
     returnOut = predict(fitall,onestdLambda,type="coefficients")
-    return(list(lambda = returnOut$lambdaSeq, estCVError = cv[which(onestdLambda == lambdaSeq)], alpha = drop(returnOut$alpha), beta = drop(returnOut$beta),whichInvalid = paste(which(abs(returnOut$alpha) > 0),sep="",collapse=",")))
+    return(list(lambda = onestdLambda, estCVError = cv[which(onestdLambda == lambdaSeq)], alpha = drop(returnOut$alpha), beta = drop(returnOut$beta),whichInvalid = paste(which(abs(returnOut$alpha) > 0),sep="",collapse=",")))
   }
 }
